@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Casanova Photography</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400&family=Jost:wght@200;300;400&display=swap">
+    <style>
+        /* Copy base styles from main.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Jost', sans-serif;
+            font-weight: 200;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 20px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 600px 300px;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin-left: -60px;
+            white-space: nowrap;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #aaa;
+        }
+
+        .header-title {
+            font-family: 'Cormorant', serif;
+            font-size: 3.2em;
+            margin: 0;
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: 2px;
+            font-weight: 300;
+            text-transform: none;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #000;
+            min-width: 160px;
+            list-style: none;
+            padding: 10px 0;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content li {
+            padding: 8px 16px;
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            font-size: 0.85em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .dropdown-content a:hover {
+            color: #aaa;
+        }
+
+        /* Media queries for responsive navigation */
+        @media screen and (max-width: 1024px) {
+            .nav-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .header-title {
+                font-size: 2.4em;
+                order: -1;
+            }
+
+            .nav-links {
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                margin: 0;  /* Remove margin-left: -60px */
+                padding: 0;
+                width: 100%;
+            }
+
+            .nav-links a {
+                font-size: 0.8em;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px 20px;
+            }
+
+            .header-title {
+                font-size: 2em;
+            }
+        }
+
+        /* About page specific styles */
+        .about-container {
+            max-width: 85%;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .profile-section {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            margin: 40px auto;
+            padding: 0 80px;
+            max-width: 1200px;
+        }
+
+        .profile-image {
+            width: 350px;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .bio-content {
+            flex: 1;
+            padding-top: 100px;
+        }
+
+        .bio-content h2 {
+            font-family: 'Cormorant', serif;
+            font-size: 2.4em;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .bio-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #ddd;
+            letter-spacing: 0.5px;
+        }
+
+        .social-links {
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 24px;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #aaa;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .profile-section {
+                padding: 0 20px;
+                gap: 30px;
+            }
+
+            .profile-image {
+                width: 300px;
+                height: 360px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 0 10px;
+                gap: 40px;
+            }
+
+            .profile-image {
+                width: 280px;
+                height: 340px;
+            }
+
+            .bio-content {
+                padding-top: 0;
+            }
+
+            .main-title {
+                font-size: 2.5em;
+                margin: 30px 0;
+            }
+
+            .bio-content p {
+                font-size: 1.1em;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+
+            .about-container {
+                padding: 0 10px;
+            }
+
+            .equipment-section {
+                padding: 20px 10px;
+                margin-top: 30px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .profile-section {
+                padding: 0 5px;
+                gap: 30px;
+            }
+
+            .profile-image {
+                width: 250px;
+                height: 300px;
+            }
+
+            .main-title {
+                font-size: 2.2em;
+            }
+
+            .about-container {
+                padding: 0 5px;
+            }
+
+            .equipment-section {
+                padding: 20px 5px;
+                margin-top: 20px;
+            }
+
+            .equipment-categories {
+                gap: 20px;
+            }
+        }
+
+        /* Add these new styles */
+        .equipment-section {
+            margin-top: 60px;
+            padding: 30px 20px;
+            border-top: 1px solid #333;
+        }
+
+        .equipment-categories {
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+            max-width: 100%;
+        }
+
+        .equipment-category {
+            flex: 1;
+            margin-bottom: 0;
+            max-width: 50%;
+        }
+
+        .equipment-section h2 {
+            font-family: 'Cormorant', serif;
+            font-size: 2em;
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .category-title {
+            font-family: 'Cormorant', serif;
+            font-size: 1.6em;
+            margin: 20px 0;
+            font-weight: 300;
+            text-align: center;
+            color: #fff;
+        }
+
+        .equipment-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .equipment-item h4 {
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            color: #fff;
+            font-weight: 300;
+        }
+
+        .equipment-item ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .equipment-item li {
+            font-size: 1.1em;
+            color: #ddd;
+            margin: 4px 0;
+            white-space: nowrap;
+        }
+
+        .equipment-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .footer {
+            border-top: 1px solid #333;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer .social-links {
+            margin: 0;
+        }
+
+        .footer .social-links a {
+            font-size: 24px;
+            margin: 0 15px;
+        }
+
+        .category-content {
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .equipment-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .equipment-categories {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .equipment-category {
+                max-width: 100%;
+            }
+
+            .equipment-image {
+                height: 250px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .equipment-grid {
+                gap: 15px;
+            }
+
+            .equipment-image {
+                height: 200px;
+            }
+
+            .equipment-item li {
+                white-space: normal;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .equipment-image {
+                height: 180px;
+            }
+
+            .equipment-categories {
+                gap: 30px;
+            }
+        }
+
+        .main-title {
+            font-family: 'Cormorant', serif;
+            font-size: 3em;
+            margin: 30px 0;
+            font-weight: 300;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <!-- <li class="dropdown">
+                    <a href="#portfolio">Portfolio</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#portrait">Portrait</a></li>
+                        <li><a href="#graduation">Graduation</a></li>
+                        <li><a href="#couple">Couple</a></li>
+                    </ul>
+                </li> -->
+                <li><a href="book.html">Book a Session</a></li>
+            </ul>
+            <h2 class="header-title">Casanova Photography</h2>
+        </nav>
+    </header>
+
+    <main class="about-container">
+        <h2 class="main-title">About Me</h2>
+        <div class="profile-section">
+            <img src="peng.jpeg" alt="Photographer" class="profile-image">
+            <div class="bio-content">
+                <p>I'm William, a second year student at UC Berkeley.</p>
+                <p>I capture meaningful photos that preserve precious memories or express messages and emotions.</p>
+            </div>
+        </div>
+        
+        <div class="equipment-section">
+            <h2>My Equipments</h2>
+            <div class="equipment-categories">
+                <div class="equipment-category">
+                    <h3 class="category-title">Digital Photography</h3>
+                    <div class="category-content">
+                        <img src="digital.jpg" alt="Digital Photography Setup" class="equipment-image" style="object-position: 0% 0%">
+                        <div class="equipment-grid">
+                            <div class="equipment-item">
+                                <h4>Cameras</h4>
+                                <ul>
+                                    <li>Fujifilm X-T30 II Mirrorless Camera</li>
+                                </ul>
+                            </div>
+                            <div class="equipment-item">
+                                <h4>Lenses</h4>
+                                <ul>
+                                    <li>XF18-55mm</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-category">
+                    <h3 class="category-title">Film Photography</h3>
+                    <div class="category-content">
+                        <img src="film.jpeg" alt="Film Photography Setup" class="equipment-image" style="object-position: 20% center">
+                        <div class="equipment-grid">
+                            <div class="equipment-item">
+                                <h4>Cameras</h4>
+                                <ul>
+                                    <li>Prima Super 115u</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://www.instagram.com/williampeng23/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.xiaohongshu.com/user/profile/660b6142000000000600e8e9?xsec_token=YBIgS-w669hr3Aij1NVYoNu8Qlksh_G920jf5Ej3WRtmo=&xsec_source=app_share&xhsshare=WeixinSession&appuid=660b6142000000000600e8e9&apptime=1742966452&share_id=ebb01e334cb54a85ac2bb839c58de9fa"><i class="fas fa-book"></i></a>
+        </div>
+    </footer>
+</body>
+</html> 

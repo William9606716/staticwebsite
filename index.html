@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casanova Photography</title>
+    <!-- Add Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400&family=Jost:wght@200;300;400&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Jost', sans-serif;
+            font-weight: 200;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 20px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 600px 300px;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin-left: -60px;
+            white-space: nowrap;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #aaa;
+        }
+
+        .header-title {
+            font-family: 'Cormorant', serif;
+            font-size: 3.2em;
+            margin: 0;
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: 2px;
+            font-weight: 300;
+            text-transform: none;
+        }
+
+        .section-title {
+            font-family: 'Italiana', serif;
+            text-align: center;
+            font-size: 2.5em;
+            margin: 50px 0 30px;
+            color: #fff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* About Section */
+        .about {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        /* Contact Form */
+        .contact {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .contact form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .contact input,
+        .contact textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #111;
+            color: #fff;
+        }
+
+        .contact input::placeholder,
+        .contact textarea::placeholder {
+            color: #888;
+        }
+
+        .contact button {
+            background-color: #333;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact button:hover {
+            background-color: #555;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Social Media */
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 24px;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #aaa;
+        }
+
+        /* Lazy Loading */
+        .lazy-image {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .lazy-image.loaded {
+            opacity: 1;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #000;
+            min-width: 160px;
+            list-style: none;
+            padding: 10px 0;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content li {
+            padding: 8px 16px;
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            font-size: 0.85em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .dropdown-content a:hover {
+            color: #aaa;
+        }
+
+        .panel-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 95%;
+            width: min(1400px, 100%);
+        }
+
+        .panel {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            transition: transform 0.5s, filter 0.5s;
+        }
+
+        .panel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .panel-overlay h3 {
+            color: white;
+            font-family: 'Jost', sans-serif;
+            font-size: 1.8em;
+            font-weight: 200;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .panel-overlay .date {
+            color: #ccc;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            font-weight: 200;
+        }
+
+        .panel:hover img {
+            transform: scale(1.05);
+            filter: brightness(0.7);
+        }
+
+        .panel:hover .panel-overlay {
+            opacity: 1;
+        }
+
+        /* Update the media query for tablet/mobile */
+        @media screen and (max-width: 1024px) {
+            .nav-container {
+                grid-template-columns: 1fr;  /* Changed to single column */
+                gap: 20px;
+            }
+
+            .header-title {
+                font-size: 2.4em;
+                order: -1;  /* Makes title appear first */
+            }
+
+            .nav-links {
+                margin: 0 auto;  /* Center the navigation */
+                justify-content: center;  /* Center the navigation items */
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 0.8em;
+            }
+
+            .panel-grid {
+                grid-template-columns: repeat(2, 1fr);  /* 2 columns on mobile */
+                width: 100%;
+                padding: 10px;
+            }
+
+            .panel-overlay h3 {
+                font-size: 1.4em;
+            }
+        }
+
+        /* Update the small screen media query */
+        @media screen and (max-width: 480px) {
+            .nav-links {
+                flex-wrap: wrap;  /* Allow nav items to wrap on very small screens */
+                gap: 15px 20px;
+            }
+
+            .header-title {
+                font-size: 2em;
+            }
+
+            .panel-grid {
+                padding: 10px;
+                gap: 15px;
+                grid-template-columns: repeat(2, 1fr);  /* Maintain 2 columns on mobile */
+            }
+        }
+
+        .social-icons a {
+            margin: 0 15px;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .social-icons a:first-child {
+            margin-left: 0;
+        }
+
+        .social-icons a:last-child {
+            margin-right: 0;
+        }
+
+        .divider {
+            width: 100%;
+            margin: 30px 0;
+            border: none;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <!-- <li class="dropdown">
+                    <a href="#portfolio">Portfolio</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#portrait">Portrait</a></li>
+                        <li><a href="#graduation">Graduation</a></li>
+                        <li><a href="#couple">Couple</a></li>
+                    </ul>
+                </li> -->
+                <li><a href="book.html">Book a Session</a></li>
+            </ul>
+            <h2 class="header-title">Casanova Photography</h2>
+        </nav>
+    </header>
+
+    <section class="panel-grid">
+        <a href="teresa.html" class="panel">
+            <img src="teresa.jpg" alt="Family" style="object-position: 0% 90%; transform: scale(1.1);">
+            <div class="panel-overlay">
+                <h3>Teresa</h3>
+                <span class="date">April 2025</span>
+            </div>
+        </a>
+        <a href="nora.html" class="panel">
+            <img src="nora.jpg" alt="Family" style="object-position: 100% 30%; transform: scale(1);">
+            <div class="panel-overlay">
+                <h3>Nora</h3>
+                <span class="date">April 2025</span>
+            </div>
+        </a>
+        <a href="nicholasandalissa.html" class="panel">
+            <img src="nicholasandalissa.jpg" alt="Family" style="object-position: 50% 00%; transform: scale(1.5);">
+            <div class="panel-overlay">
+                <h3>Nicholas and Alissa</h3>
+                <span class="date">February 2025</span>
+            </div>
+        </a>
+        <a href="zilong.html" class="panel">
+            <img src="zilong.jpg" alt="Wedding" style="object-position: 00% 00%; transform: scale(1.1);">
+            <div class="panel-overlay">
+                <h3>Zilong</h3>
+                <span class="date">Jan 2025</span>
+            </div>
+        </a>
+        <a href="cici.html" class="panel">
+            <img src="cici.jpg" alt="Graduation" style="object-position: 45% 20%;">
+            <div class="panel-overlay">
+                <h3>Cici</h3>
+                <span class="date">Jan 2025</span>
+            </div>
+        </a>
+        <a href="bridget.html" class="panel">
+            <img src="./bridget.jpg" alt="Portrait">
+            <div class="panel-overlay">
+                <h3>Bridget</h3>
+                <span class="date">December 2024</span>
+            </div>
+        </a>
+    </section>
+
+    <section id="about" class="about">
+        <hr class="divider">
+        <div class="social-links">
+            <a href="https://www.instagram.com/williampeng23/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.xiaohongshu.com/user/profile/660b6142000000000600e8e9?xsec_token=YBIgS-w669hr3Aij1NVYoNu8Qlksh_G920jf5Ej3WRtmo=&xsec_source=app_share&xhsshare=WeixinSession&appuid=660b6142000000000600e8e9&apptime=1742966452&share_id=ebb01e334cb54a85ac2bb839c58de9fa"><i class="fas fa-book"></i></a>
+        </div>
+    </section>
+
+    <div class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img src="" alt="Lightbox Image">
+    </div>
+
+    <script>
+        // Lightbox functionality
+        const gallery = document.querySelector('.gallery');
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const closeLightbox = document.querySelector('.close-lightbox');
+
+        gallery.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG') {
+                lightboxImg.src = e.target.src;
+                lightbox.classList.add('active');
+            }
+        });
+
+        closeLightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        // Lazy loading images
+        const lazyLoad = () => {
+            const images = document.querySelectorAll('.gallery img');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(img => {
+                img.classList.add('lazy-image');
+                img.dataset.src = img.src;
+                img.src = '';
+                imageObserver.observe(img);
+            });
+        };
+
+        // Contact form handling
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Message sent successfully!');
+            contactForm.reset();
+        });
+
+        // Initialize lazy loading
+        document.addEventListener('DOMContentLoaded', lazyLoad);
+    </script>
+</body>
+</html>

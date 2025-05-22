@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Session - Casanova Photography</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400&family=Jost:wght@200;300;400&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Jost', sans-serif;
+            font-weight: 200;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 20px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 600px 300px;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin-left: -60px;
+            white-space: nowrap;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #aaa;
+        }
+
+        .header-title {
+            font-family: 'Cormorant', serif;
+            font-size: 3.2em;
+            margin: 0;
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: 2px;
+            font-weight: 300;
+            text-transform: none;
+        }
+
+        .booking-content {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant', serif;
+            font-size: 2.5em;
+            text-align: center;
+            margin: 50px 0 30px;
+            letter-spacing: 2px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .pricing-card {
+            border: 1px solid #333;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .pricing-card h3 {
+            font-family: 'Cormorant', serif;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 1.4em;
+            margin: 20px 0;
+        }
+
+        .details {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .process-steps {
+            margin: 40px 0;
+        }
+
+        .step {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+
+        .step h3 {
+            font-family: 'Cormorant', serif;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .social-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 24px;
+            margin: 0 30px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #aaa;
+        }
+
+        .divider {
+            width: 100%;
+            margin: 30px 0;
+            border: none;
+            border-top: 1px solid #333;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .nav-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header-title {
+                font-size: 2.4em;
+                order: -1;
+            }
+
+            .nav-links {
+                margin: 0 auto;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 0.8em;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px 20px;
+            }
+
+            .header-title {
+                font-size: 2em;
+            }
+        }
+
+        .wechat-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            padding: 40px;
+            border-radius: 15px;
+            width: auto;
+            height: auto;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .wechat-popup.active {
+            display: block;
+        }
+
+        .wechat-popup img {
+            max-width: 300px;
+            max-height: 300px;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .close-wechat {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+            opacity: 0.8;
+        }
+
+        .close-wechat:hover {
+            color: #aaa;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <!-- <li><a class="disabled" style="color: #fff;">Portfolio</a></li> -->
+                <li><a href="book.html">Book a Session</a></li>
+            </ul>
+            <h2 class="header-title">Casanova Photography</h2>
+        </nav>
+    </header>
+
+    <main class="booking-content">
+        <!-- <h1 class="section-title">Book a Session</h1>
+        
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>By Hour</h3>
+                <div class="price">$200/hour</div>
+                <div class="details">
+                    <p>100 raw photos + 9 edited photos</p>
+                    <p>High-resolution digital files</p>
+                    <p>Personal use rights</p>
+                </div>
+            </div>
+            <div class="pricing-card">
+                <h3>Full Day</h3>
+                <div class="price">$1000</div>
+                <div class="details">
+                    <p>Maximum 8 hours photoshoot</p>
+                    <p>50 edited photos</p>
+                    <p>High-resolution digital files</p>
+                    <p>Personal use rights</p>
+                </div>
+            </div>
+        </div> -->
+
+        <h2 class="section-title" style="font-size: 2em;">Booking Process</h2>
+        <div class="process-steps">
+            <div class="step">
+                <h3>1. Initial Contact</h3>
+                <p>Reach out to me on Instagram to discuss your vision for the shoot, preferred date, and location.</p>
+            </div>
+            <div class="step">
+                <h3>2. Secure Your Date</h3>
+                <p>Once we've confirmed the details, a 50% deposit is required to secure your session date.</p>
+            </div>
+            <div class="step">
+                <h3>3. The Photoshoot</h3>
+                <p>We'll meet at the agreed location and create beautiful memories together.</p>
+            </div>
+            <div class="step">
+                <h3>4. Delivery</h3>
+                <p>Within one week of your session, you'll receive a Google Drive link with your carefully edited photos.</p>
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <h2 class="section-title" style="font-size: 2em;">Ready to Book?</h2>
+            <p style="margin: 20px 0;">Contact me on Instagram to get started!</p>
+            
+        </div>
+    </main>
+
+    <section id="about" class="about">
+        <hr class="divider">
+        <div class="social-links">
+            <a href="https://www.instagram.com/williampeng23/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.xiaohongshu.com/user/profile/660b6142000000000600e8e9"><i class="fas fa-book"></i></a>
+        </div>
+    </section>
+
+    <script>
+        const wechatIcon = document.getElementById('wechat-icon');
+        const wechatPopup = document.querySelector('.wechat-popup');
+        const closeWechat = document.querySelector('.close-wechat');
+
+        wechatIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            wechatPopup.classList.add('active');
+        });
+
+        closeWechat.addEventListener('click', () => {
+            wechatPopup.classList.remove('active');
+        });
+
+        wechatPopup.addEventListener('click', (e) => {
+            if (e.target === wechatPopup) {
+                wechatPopup.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html> 

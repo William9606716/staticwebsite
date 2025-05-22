@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cici - Casanova Photography</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400&family=Jost:wght@200;300;400&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Jost', sans-serif;
+            font-weight: 200;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Copy your existing header and nav styles from main.html */
+        header {
+            padding: 20px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 600px 300px;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin-left: -60px;
+            white-space: nowrap;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #aaa;
+        }
+
+        .header-title {
+            font-family: 'Cormorant', serif;
+            font-size: 3.2em;
+            margin: 0;
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: 2px;
+            font-weight: 300;
+            text-transform: none;
+        }
+
+        /* Gallery Grid Styles */
+        .gallery-title {
+            font-family: 'Cormorant', serif;
+            text-align: center;
+            font-size: 2.2em;
+            margin: 30px 0;
+            letter-spacing: 2px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 2/3;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-lightbox:hover {
+            color: #aaa;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-button {
+            left: 20px;
+        }
+
+        .next-button {
+            right: 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .prev-button {
+                left: 10px;
+            }
+
+            .next-button {
+                right: 10px;
+            }
+        }
+
+        /* Footer Styles */
+        .divider {
+            width: 100%;
+            margin: 30px 0;
+            border: none;
+            border-top: 1px solid #333;
+        }
+
+        .social-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 24px;
+            margin: 0 30px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #aaa;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .nav-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .header-title {
+                font-size: 2.4em;
+                order: -1;
+            }
+
+            .nav-links {
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px 20px;
+            }
+
+            .header-title {
+                font-size: 2em;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+                padding: 0 10px;
+            }
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #000;
+            min-width: 160px;
+            list-style: none;
+            padding: 10px 0;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content li {
+            padding: 8px 16px;
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            font-size: 0.85em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .dropdown-content a:hover {
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <!-- <li class="dropdown">
+                    <a href="#portfolio">Portfolio</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#portrait">Portrait</a></li>
+                        <li><a href="#graduation">Graduation</a></li>
+                        <li><a href="#couple">Couple</a></li>
+                    </ul>
+                </li> -->
+                <li><a href="book.html">Book a Session</a></li>
+            </ul>
+            <h2 class="header-title">Casanova Photography</h2>
+        </nav>
+    </header>
+
+    <main>
+        <h1 class="gallery-title">Cici</h1>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="cici/cici1.jpg" alt="Cici Portrait 2">
+            </div>
+            <div class="gallery-item">
+                <img src="cici/cici2.jpg" alt="Cici Portrait 2">
+            </div>
+            <div class="gallery-item">
+                <img src="cici/cici3.jpg" alt="Cici Portrait 3">
+            </div>
+            <div class="gallery-item">
+                <img src="cici/cici4.jpg" alt="Cici Portrait 4">
+            </div>
+            <div class="gallery-item">
+                <img src="cici/cici5.jpg" alt="Cici Portrait 5">
+            </div>
+            <div class="gallery-item">
+                <img src="cici/cici6.jpg" alt="Cici Portrait 6">
+            </div>
+            <div class="gallery-item">
+                <img src="cici/cici7.jpg" alt="Cici Portrait 7">
+            </div>
+            <div class="gallery-item">
+                <img src="cici/cici8.jpg" alt="Cici Portrait 8">
+            </div>
+            <div class="gallery-item">
+                <img src="cici/cici9.jpg" alt="Cici Portrait 9">
+            </div>
+            <div class="gallery-item">
+                <img src="cici/cici10.jpg" alt="Cici Portrait 10">
+            </div>
+            </div>
+        </div>
+    </main>
+
+    <section id="about" class="about">
+        <hr class="divider">
+        <div class="social-links">
+            <a href="https://www.instagram.com/williampeng23/"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.xiaohongshu.com/user/profile/660b6142000000000600e8e9"><i class="fas fa-book"></i></a>
+        </div>
+    </section>
+
+    <div class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <button class="nav-button prev-button">&lt;</button>
+        <img src="" alt="Lightbox Image">
+        <button class="nav-button next-button">&gt;</button>
+    </div>
+
+    <script>
+        // Cache DOM elements
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const closeLightbox = document.querySelector('.close-lightbox');
+        const prevButton = document.querySelector('.prev-button');
+        const nextButton = document.querySelector('.next-button');
+        let currentImageIndex = 0;
+
+        // Get all image sources
+        const imageSources = Array.from(galleryItems).map(item => item.querySelector('img').src);
+
+        // Function to update lightbox image
+        const updateLightboxImage = (index) => {
+            currentImageIndex = (index + imageSources.length) % imageSources.length;
+            lightboxImg.src = imageSources[currentImageIndex];
+        };
+
+        // Use event delegation for better performance
+        document.querySelector('.gallery-grid').addEventListener('click', (e) => {
+            const galleryItem = e.target.closest('.gallery-item');
+            if (galleryItem) {
+                const img = galleryItem.querySelector('img');
+                currentImageIndex = imageSources.indexOf(img.src);
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            }
+        });
+
+        // Navigation functions
+        const showPrevImage = () => updateLightboxImage(currentImageIndex - 1);
+        const showNextImage = () => updateLightboxImage(currentImageIndex + 1);
+
+        // Add event listeners for navigation
+        prevButton.addEventListener('click', showPrevImage);
+        nextButton.addEventListener('click', showNextImage);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            
+            if (e.key === 'ArrowLeft') showPrevImage();
+            if (e.key === 'ArrowRight') showNextImage();
+            if (e.key === 'Escape') closeLightboxFn();
+        });
+
+        // Close lightbox
+        const closeLightboxFn = () => lightbox.classList.remove('active');
+        closeLightbox.addEventListener('click', closeLightboxFn);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightboxFn();
+        });
+    </script>
+</body>
+</html> 
